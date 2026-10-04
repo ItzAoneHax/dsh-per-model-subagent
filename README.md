@@ -18,7 +18,7 @@
 
 <div align="center">
 
-[是什么](#是什么) · [路由判定](#路由判定) · [安装](#安装) · [配置](#配置) · [Web-设置页](#web-设置页) · [兼容性](#兼容性) · [开发与测试](#开发与测试)
+[是什么](#是什么) · [路由判定](#路由判定) · [安装](#安装) · [配置](#配置) · [Web-设置页](#web-设置页) · [兼容性](#兼容性) · [开发与测试](#开发与测试) · [制作](#制作)
 
 </div>
 
@@ -119,6 +119,10 @@ node test/host.test.mjs     # 委托门行为测试（需在装有 @deepseek-ai/
 ```
 
 `DSH_PMS_MODULE` 环境变量可把行为测试指向另一份拷贝（bare specifier 或 file URL）。
+
+## 制作
+
+本插件由 [DeepSeek V4.1 Flash](https://www.deepseek.com/) 与 [GLM 5.3](https://chat.z.ai/) 制作。
 
 ## 许可证
 

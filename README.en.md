@@ -18,7 +18,7 @@ English | [中文](README.md)
 
 <div align="center">
 
-[What it does](#what-it-does) · [Routing decisions](#routing-decisions) · [Install](#install) · [Configuration](#configuration) · [Settings page](#settings-page) · [Compatibility](#compatibility) · [Development and tests](#development-and-tests)
+[What it does](#what-it-does) · [Routing decisions](#routing-decisions) · [Install](#install) · [Configuration](#configuration) · [Settings page](#settings-page) · [Compatibility](#compatibility) · [Development and tests](#development-and-tests) · [Credits](#credits)
 
 </div>
 
@@ -119,6 +119,10 @@ node test/host.test.mjs     # behavioral tests for the delegation gate (run insi
 ```
 
 Set `DSH_PMS_MODULE` to a bare specifier or file URL to point the behavioral tests at another copy.
+
+## Credits
+
+This plugin was built by [DeepSeek V4.1 Flash](https://www.deepseek.com/) and [GLM 5.3](https://chat.z.ai/).
 
 ## License
 
