@@ -1,0 +1,3 @@
+# Keep the repository LF-normalized regardless of the checkout platform.
+* text=auto eol=lf
+*.tgz binary

@@ -1,0 +1,13 @@
+# Build artifacts and local installs
+node_modules/
+*.tgz
+*.log
+
+# Editor / OS noise
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# DSH runtime scratch
+.dsh/

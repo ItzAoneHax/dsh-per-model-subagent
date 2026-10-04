@@ -1,0 +1,13 @@
+# dsh-per-model-subagent bundle patch
+#
+# This file is the `dsh.bundle.patch` layer of the package. A profile that
+# selects `dsh-per-model-subagent` in `dsh.profile.bundles` merges this patch at
+# boot, which is what mounts the plugin's loader row; the profile's own
+# cordis.patch.yml then only overrides that row's `config` (and can toggle it
+# off with `disabled: true`).
+#
+# Do not also mount a manual `insert` row for this plugin in the profile patch
+# file: two mounts register the same tool and delegation gate twice.
+- insert:
+    - id: per-model-subagent
+      name: 'dsh-per-model-subagent'
