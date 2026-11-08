@@ -11,3 +11,6 @@ Thumbs.db
 
 # DSH runtime scratch
 .dsh/
+
+# Local diagnosis scratch (asar extraction, render harnesses)
+.scratch/

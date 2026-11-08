@@ -2,7 +2,7 @@
 
 中文 | [English](README.en.md)
 
-**dsh-per-model-subagent** 是一个 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 插件，按**父模型**（发起委托的对话模型）限定子智能体可使用的模型：越权选择被替换或拒绝，未显式选择时落到指定默认模型，并在 Web 客户端「插件」页提供中英双语的规则设置界面。
+**dsh-per-model-subagent** 是一个 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 插件，按**父模型**（发起委托的对话模型）限定子智能体可使用的模型：越权选择被替换或拒绝，未显式选择时落到指定默认模型，并在 DSH 设置弹窗的左侧导航中提供独立的中英双语规则设置页。
 
 <p align="center">
   <img src="https://img.shields.io/github/v/release/ItzAoneHax/dsh-per-model-subagent?style=flat-square" alt="Version">
@@ -98,12 +98,17 @@ dsh plugin --profile web add github:ItzAoneHax/dsh-per-model-subagent
 
 ## Web 设置页
 
-在 Web 客户端「设置 → 插件 → 子智能体模型路由」中可视化编辑全部配置，无需手写 patch 文件：
+在 DSH 客户端「设置 → 子智能体模型路由」中可视化编辑全部配置，无需手写 patch 文件；该条目与「模型」「Agent 预设」等一样，直接位于设置弹窗左侧导航：
 
 - 界面提供中文 / 英文文案，跟随客户端语言；
-- provider 与 model 输入框自动补全候选项来自宿主的模型目录，目录不可用时仍可手动填写；
+- 独立设置分区直接展示完整表单，不再藏在插件管理卡片中；
+- provider 与 model 都是列表选择：候选项来自宿主 `remote.session.modelCatalog()`，也就是工作区对话里模型选择器读的同一份目录，因此这里能选的正是对话能选的；
+- model 列表随所选 provider 收窄（换 provider 后需要重新选 model）；配置里已保存、但目录不再提供的路由仍以「（不可用）」保留在列表中，不会被静默丢弃；
+- 目录不可用（或当前没有任何可用模型）时，页面说明原因并给出重试，而不是让人手填一个对话根本选不了的路由；
 - 保存前做与宿主一致的校验（父模型需成对填写、白名单至少一项、默认模型必须入选、回退规则至多一条、父模型不得重复）；
 - 配置在别处被修改时提示冲突，可选择重载最新值；只读部署会明确提示无法保存。
+
+设置页通过 `settings.section` 槽注册为独立分区；条目 id 为 `per-model-subagent`，与配置命名空间一致。页面通过 `ctx.configForms` 共享控制器读写，并通过 `remote.session.modelCatalog()` 获取可选模型。表单缺失、目录缺失或配置残缺时显示相应状态，不会向设置页抛出异常。
 
 ## 兼容性
 
@@ -119,6 +124,8 @@ node test/host.test.mjs     # 委托门行为测试（需在装有 @deepseek-ai/
 ```
 
 `DSH_PMS_MODULE` 环境变量可把行为测试指向另一份拷贝（bare specifier 或 file URL）。
+
+客户端测试覆盖原生 `settings.section` 注册、完整表单渲染、模型目录选择、已失效路由保留、保存/重载及异常配置状态。
 
 ## 制作
 

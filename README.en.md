@@ -2,7 +2,7 @@
 
 English | [中文](README.md)
 
-**dsh-per-model-subagent** is a [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugin that restricts the models a subagent may run on, per **parent model** (the conversational model that delegates): out-of-policy selections are substituted or rejected, unspecified selections fall back to a designated default, and a bilingual settings page is available on the web client's Plugins page.
+**dsh-per-model-subagent** is a [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugin that restricts the models a subagent may run on, per **parent model** (the conversational model that delegates): out-of-policy selections are substituted or rejected, unspecified selections fall back to a designated default, and a bilingual settings page has its own entry in the DSH Settings dialog's left navigation.
 
 <p align="center">
   <img src="https://img.shields.io/github/v/release/ItzAoneHax/dsh-per-model-subagent?style=flat-square" alt="Version">
@@ -98,12 +98,17 @@ Each `rule`:
 
 ## Settings page
 
-Everything above can be edited visually on the web client under **Settings → Plugins → Subagent model routing**, no patch files required:
+Everything above can be edited visually under **Settings → Subagent model routing**, no patch files required. Like Models and Agent presets, the entry sits directly in the Settings dialog's left navigation:
 
 - the page ships Chinese and English copy and follows the client's language;
-- provider and model fields offer autocomplete fed by the host's model catalog — hand-typing still works when the catalog is unavailable;
+- the dedicated section shows the complete form directly instead of hiding it inside a plugin-manager card;
+- provider and model are list selections fed by the host's `remote.session.modelCatalog()` — the same directory the workspace conversation's model picker reads, so every offerable route is one the conversation can actually select;
+- the model list narrows to the chosen provider (changing the provider asks for a new model), and a route the configuration still stores but the catalog no longer advertises stays in the list marked “(unavailable)” instead of being dropped silently;
+- an unavailable catalog (or one that offers no model at all) states why and offers a reload, rather than letting a route be typed that the conversation could never select;
 - saving runs the same validation as the host (parent fields come in pairs, at least one allowed model, the default must be allowed, at most one fallback, no duplicate parents);
 - changes made elsewhere surface as a conflict with an explicit reload choice, and read-only deployments say so instead of failing to save.
+
+The page registers on the `settings.section` slot with id `per-model-subagent`, matching its configuration namespace. It reads and writes through the shared `ctx.configForms` controller and loads selectable models through `remote.session.modelCatalog()`. A missing form, an unavailable catalog, or a partial configuration produces an explicit page state rather than an exception.
 
 ## Compatibility
 
@@ -119,6 +124,8 @@ node test/host.test.mjs     # behavioral tests for the delegation gate (run insi
 ```
 
 Set `DSH_PMS_MODULE` to a bare specifier or file URL to point the behavioral tests at another copy.
+
+The client suite covers native `settings.section` registration, complete-form rendering, catalog-derived selections, unavailable routes, save/reload behavior, and malformed configuration states.
 
 ## Credits
 

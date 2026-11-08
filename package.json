@@ -1,7 +1,7 @@
 {
   "name": "dsh-per-model-subagent",
-  "version": "0.1.1",
-  "description": "Per-parent-model routing rules for DSH subagent delegation, with a settings page on the web client's Plugins page",
+  "version": "0.2.4",
+  "description": "Per-parent-model routing rules for DSH subagent delegation, with a dedicated section in DSH Settings",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
@@ -16,7 +16,6 @@
     "client": {
       "inject": [
         "@deepseek-ai/dsh-client-ui-settings",
-        "@deepseek-ai/dsh-client-ui-plugin-manager",
         "@deepseek-ai/dsh-client-locale"
       ],
       "platform": "web"
